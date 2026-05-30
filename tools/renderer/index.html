@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZenByte Web Scraper Desktop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="logo-area">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+          <line x1="12" y1="22.08" x2="12" y2="12" />
+        </svg>
+        <span class="logo-text">ZenByte<span class="highlight">Scrape</span></span>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="scraper">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          </svg>
+          Dashboard
+        </button>
+        <button class="nav-item" data-tab="settings">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+          Settings
+        </button>
+        <button class="nav-item" data-tab="history">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          History & Archive
+        </button>
+        <button class="nav-item" data-tab="preview">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+            <line x1="8" y1="21" x2="16" y2="21" />
+            <line x1="12" y1="17" x2="12" y2="21" />
+          </svg>
+          Site Previewer
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="version">v1.0.0</span>
+        <span class="status-online">
+          <span class="dot"></span> Self-Contained Engine
+        </span>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Status Bar -->
+      <header class="top-bar">
+        <h1 id="tab-title">Web Scraper Dashboard</h1>
+        <div class="running-indicator hidden" id="global-running-indicator">
+          <div class="spinner"></div>
+          <span>Scraping Active</span>
+        </div>
+      </header>
+
+      <!-- Content Panels -->
+      <div class="content-body">
+        
+        <!-- 1. Scraper Dashboard Panel -->
+        <section class="panel active" id="tab-content-scraper">
+          <!-- Setup Bar -->
+          <div class="card setup-card">
+            <div class="form-row">
+              <div class="form-group flex-2">
+                <label for="input-url">Target Website URL</label>
+                <div class="input-with-glow">
+                  <input type="text" id="input-url" placeholder="https://example.com" value="">
+                </div>
+              </div>
+              <div class="form-group flex-3">
+                <label for="input-output-dir">Local Destination Folder</label>
+                <div class="input-button-group">
+                  <input type="text" id="input-output-dir" placeholder="Click select to choose folder..." readonly>
+                  <button class="btn btn-secondary" id="btn-select-dir">Select Folder</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="action-bar">
+              <button class="btn btn-primary" id="btn-start">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                Start Crawling
+              </button>
+              <button class="btn btn-warning hidden" id="btn-pause">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="6" y="4" width="4" height="16" />
+                  <rect x="14" y="4" width="4" height="16" />
+                </svg>
+                Pause
+              </button>
+              <button class="btn btn-success hidden" id="btn-resume">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                Resume
+              </button>
+              <button class="btn btn-danger hidden" id="btn-stop">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="4" y="4" width="16" height="16" />
+                </svg>
+                Stop & Save
+              </button>
+            </div>
+          </div>
+
+          <!-- Stats Dashboard -->
+          <div class="stats-grid">
+            <div class="card stat-card" id="card-pages">
+              <div class="stat-icon-wrapper blue">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-pages-scraped">0</span>
+                <span class="stat-label">Pages Scraped</span>
+              </div>
+            </div>
+
+            <div class="card stat-card" id="card-assets">
+              <div class="stat-icon-wrapper green">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-assets-downloaded">0</span>
+                <span class="stat-label">Assets Saved</span>
+              </div>
+            </div>
+
+            <div class="card stat-card" id="card-queue">
+              <div class="stat-icon-wrapper orange">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="4" y1="6" x2="20" y2="6" />
+                  <line x1="4" y1="12" x2="20" y2="12" />
+                  <line x1="4" y1="18" x2="20" y2="18" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-queue-size">0</span>
+                <span class="stat-label">Remaining Queue</span>
+              </div>
+            </div>
+
+            <div class="card stat-card" id="card-failed">
+              <div class="stat-icon-wrapper red">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-failed-downloads">0</span>
+                <span class="stat-label">Failed Requests</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card progress-card hidden" id="progress-wrapper">
+            <div class="progress-details">
+              <span class="progress-status-text" id="progress-status-text">Crawling directory...</span>
+              <span class="progress-percentage" id="progress-percentage">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Terminal Console Logging -->
+          <div class="card log-card flex-1">
+            <div class="log-header">
+              <div class="log-title">
+                <span class="pulse-indicator active" id="terminal-pulse"></span>
+                <span>Console Logs</span>
+              </div>
+              <div class="log-controls">
+                <input type="text" id="log-filter" placeholder="Filter logs...">
+                <button class="btn-clear" id="btn-clear-logs">Clear</button>
+              </div>
+            </div>
+            <div class="log-terminal" id="log-terminal">
+              <div class="log-line system-line">[SYSTEM] Ready. Enter URL and click Start.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Settings Panel Panel -->
+        <section class="panel" id="tab-content-settings">
+          <div class="settings-container">
+            <div class="settings-grid">
+              
+              <!-- Crawler Constraints -->
+              <div class="card settings-card">
+                <h3>Crawler Limits</h3>
+                <div class="form-group">
+                  <label for="set-max-depth">Maximum Depth (Recursion Levels)</label>
+                  <input type="number" id="set-max-depth" value="5" min="1" max="15">
+                  <span class="help-text">How deep the crawler will recursively follow hyperlinks.</span>
+                </div>
+                <div class="form-group">
+                  <label for="set-workers">Concurrency Limit (Worker Pool)</label>
+                  <input type="number" id="set-workers" value="5" min="1" max="25">
+                  <span class="help-text">Number of simultaneous page/asset downloads.</span>
+                </div>
+                <div class="form-group">
+                  <label for="set-timeout">HTTP Timeout (Seconds)</label>
+                  <input type="number" id="set-timeout" value="10" min="2" max="60">
+                  <span class="help-text">Max time to wait for a server response.</span>
+                </div>
+                <div class="form-group">
+                  <label for="set-delay">Politeness Delay (Seconds)</label>
+                  <input type="number" id="set-delay" value="0.1" step="0.05" min="0" max="10">
+                  <span class="help-text">Delay between consecutive requests to avoid rate limits.</span>
+                </div>
+              </div>
+
+              <!-- Content Filters -->
+              <div class="card settings-card">
+                <h3>Asset Filtering</h3>
+                <span class="help-text section-help">Exclude assets to speed up mirrors or fit smaller directories.</span>
+                <div class="checkbox-group">
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="set-css" checked>
+                    <span class="checkmark"></span>
+                    Download CSS Stylesheets & Fonts
+                  </label>
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="set-js" checked>
+                    <span class="checkmark"></span>
+                    Download JavaScript Scripts
+                  </label>
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="set-images" checked>
+                    <span class="checkmark"></span>
+                    Download Images (PNG, JPG, SVG, WebP, etc.)
+                  </label>
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="set-media" checked>
+                    <span class="checkmark"></span>
+                    Download Video/Audio Media Files (MP4, MP3, etc.)
+                  </label>
+                </div>
+              </div>
+
+              <!-- Request Headers & Agent -->
+              <div class="card settings-card full-width">
+                <h3>HTTP Requests & Security</h3>
+                
+                <div class="form-group">
+                  <label for="set-ua-preset">User-Agent Preset</label>
+                  <select id="set-ua-preset">
+                    <option value="chrome">Google Chrome (Windows NT 10.0)</option>
+                    <option value="firefox">Mozilla Firefox (Windows NT 10.0)</option>
+                    <option value="safari">Apple Safari (Macintosh OS X)</option>
+                    <option value="mobile">Mobile Browser (iPhone Chrome)</option>
+                    <option value="custom">Custom User-Agent...</option>
+                  </select>
+                </div>
+
+                <div class="form-group hidden" id="ua-custom-group">
+                  <label for="set-ua-custom">Custom User-Agent String</label>
+                  <input type="text" id="set-ua-custom" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36">
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label for="set-cookies">Cookie Header String (Optional)</label>
+                    <textarea id="set-cookies" rows="3" placeholder="session_id=xyz; auth_token=123..."></textarea>
+                    <span class="help-text">Send active session cookies to scrape behind log-ins.</span>
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="set-headers">Custom JSON Headers (Optional)</label>
+                    <textarea id="set-headers" rows="3" placeholder='{ "X-Custom-Auth": "SecretToken" }'></textarea>
+                    <span class="help-text">Valid JSON structure for specialized server headers.</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Scrape History Panel -->
+        <section class="panel" id="tab-content-history">
+          <div class="history-header">
+            <h3>Archived Scraped Sites</h3>
+            <button class="btn btn-secondary btn-sm" id="btn-refresh-history">
+              <svg class="btn-icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+              </svg>
+              Refresh List
+            </button>
+          </div>
+          
+          <div class="history-list" id="history-list">
+            <!-- Dynamically populated -->
+            <div class="no-history">No sites scraped yet. Start a crawl in the Dashboard!</div>
+          </div>
+        </section>
+
+        <!-- 4. Site Previewer Panel -->
+        <section class="panel flex-column-layout" id="tab-content-preview">
+          <div class="preview-header">
+            <div class="server-status-pill offline" id="preview-status-pill">
+              <span class="dot"></span>
+              <span id="preview-status-label">Server Stopped</span>
+            </div>
+            
+            <div class="preview-address-bar">
+              <input type="text" id="preview-url-display" placeholder="Local preview address..." readonly>
+              <button class="btn-icon-action" id="btn-preview-refresh" title="Refresh Page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                </svg>
+              </button>
+              <button class="btn-icon-action" id="btn-preview-external" title="Open in System Browser">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+              </button>
+            </div>
+            
+            <button class="btn btn-danger btn-sm" id="btn-stop-preview">Stop Preview Server</button>
+          </div>
+          
+          <div class="preview-frame-container">
+            <div class="preview-placeholder" id="preview-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+                <polygon points="10 9 15 12 10 15 10 9" />
+              </svg>
+              <p>Select a site from the <strong>History & Archive</strong> tab and click <strong>Preview</strong> to launch a local server and view it here.</p>
+            </div>
+            <webview id="preview-webview" src="about:blank" class="hidden"></webview>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+  
+  <script src="app.js"></script>
+</body>
+</html>

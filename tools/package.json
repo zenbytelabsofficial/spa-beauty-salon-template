@@ -1,0 +1,29 @@
+{
+  "name": "web-scraper-desktop",
+  "version": "1.0.0",
+  "description": "Premium Offline Website Scraper & Archiver",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "keywords": [
+    "scraper",
+    "downloader",
+    "crawler",
+    "offline",
+    "mirror",
+    "electron"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0"
+  }
+}

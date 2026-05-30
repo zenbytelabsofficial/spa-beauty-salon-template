@@ -8,3 +8,4 @@ ENV/
 env/
 .idea/
 .vscode/
+node_modules/
