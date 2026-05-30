@@ -1,5 +1,11 @@
 {
   "cleanUrls": true,
+  "builds": [
+    {
+      "src": "scraped_site/**",
+      "use": "@vercel/static"
+    }
+  ],
   "rewrites": [
     {
       "source": "/css2_family_Inter_wght_300_400_500_600_700_display_swap.html",
