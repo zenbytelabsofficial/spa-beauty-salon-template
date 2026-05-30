@@ -1,0 +1,21 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/css2_family_Inter_wght_300_400_500_600_700_display_swap.html",
+      "destination": "/scraped_site/css2_family_Inter_wght_300_400_500_600_700_display_swap.html"
+    },
+    {
+      "source": "/s/(.*)",
+      "destination": "/scraped_site/s/$1"
+    },
+    {
+      "source": "/maps/(.*)",
+      "destination": "/scraped_site/maps/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/scraped_site/brancy/brancy/$1"
+    }
+  ]
+}
